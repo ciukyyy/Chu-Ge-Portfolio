@@ -1,0 +1,15 @@
+# 无关文件
+portfolio
+_img2threejs_skill
+README(img2threejs).md
+效果图.JPG
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器
+.vscode/
+*.swp
+*.swo

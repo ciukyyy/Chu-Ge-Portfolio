@@ -6,7 +6,7 @@
 <title>GE CHU · Portfolio 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#3d3327;
@@ -460,6 +460,348 @@
   .carousel-btn.prev{left:-10px;}
   .carousel-btn.next{right:-10px;}
 
+  /* 真实作品展位：海报 + 标题 + 简介 */
+  .work-slide{
+    flex:0 0 84%;
+    max-width:620px;
+    background:#fff;
+    padding:20px 22px 24px;
+    border-radius:6px;
+    box-shadow:0 14px 28px rgba(80,60,35,.3);
+    scroll-snap-align:center;
+  }
+  .work-slide .work-imgs{
+    display:flex;gap:14px;justify-content:center;align-items:flex-start;
+  }
+  .work-slide .work-imgs img{
+    display:block;
+    height:48vh;max-height:440px;
+    width:auto;max-width:48%;
+    object-fit:contain;
+    box-shadow:0 8px 16px rgba(60,45,25,.28);
+    border-radius:2px;
+  }
+  .work-slide h3{
+    font-family:'Caveat',cursive;
+    font-size:30px;font-weight:700;
+    text-align:center;
+    margin:16px 0 2px;
+    color:var(--ink);
+  }
+  .work-slide .work-badge{
+    text-align:center;
+    font-family:'Caveat',cursive;
+    font-size:20px;
+    color:var(--red);
+    margin-bottom:8px;
+  }
+  .work-slide .work-desc{
+    font-size:13.5px;line-height:1.95;
+    color:#4d4234;
+    text-align:justify;
+  }
+  .work-slide .work-link{
+    display:inline-block;
+    margin-top:12px;
+    font-family:'Caveat',cursive;
+    font-size:21px;
+    color:var(--red);
+    text-decoration:none;
+    border-bottom:2px solid var(--red);
+    padding-bottom:1px;
+  }
+  .work-slide .work-link:hover{color:var(--ink);border-color:var(--ink);}
+  .work-slide .work-link-wrap{text-align:center;}
+  .work-slide .work-imgs img{cursor:zoom-in;}
+  /* 横版照片展位：单张居中缩小，与海报展位高度协调 */
+  .work-slide.land .work-imgs{
+    flex-direction:column;
+    gap:12px;
+  }
+  .work-slide.land .work-imgs img{
+    width:92%;
+    max-width:92%;
+    margin:0 auto;
+    height:auto;
+    max-height:34vh;
+    object-fit:contain;
+  }
+
+  /* 竖海报+横横幅混合展位：上下排列，各自按比例居中 */
+  .work-slide.stack .work-imgs{
+    flex-direction:column;
+    gap:14px;
+  }
+  .work-slide.stack .work-imgs img{
+    display:block;
+    margin:0 auto;
+    width:auto;height:auto;
+    max-width:100%;
+    max-height:36vh;
+    object-fit:contain;
+    box-shadow:0 8px 16px rgba(60,45,25,.28);
+    border-radius:2px;
+  }
+
+  /* my design 板块统一使用等线字体 */
+  .modal .design-section,
+  .modal .design-section *{
+    font-family:'DengXian','等线','Microsoft YaHei','PingFang SC',sans-serif !important;
+  }
+  .modal .design-section h2{font-family:'Caveat',cursive !important;font-weight:700;font-size:40px;letter-spacing:0;}
+  .modal .design-section h3{font-weight:700;}
+  .modal .design-section .work-desc{font-size:14px;}
+
+  /* find me 板块：除标题外统一等线字体 */
+  .modal .findme-section,
+  .modal .findme-section *{
+    font-family:'DengXian','等线','Microsoft YaHei','PingFang SC',sans-serif !important;
+  }
+  .modal .findme-section h2{font-family:'Caveat',cursive !important;font-size:40px;font-weight:700;letter-spacing:0;}
+  .modal .findme-section .link-btn{font-weight:700;line-height:1.45;}
+  .modal .findme-section .link-btn .ico{font-weight:700;font-size:18px;letter-spacing:.02em;}
+  /* 文字按钮：两排两列，长邮箱/电话不再溢出 */
+  .modal .findme-section .link-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px;}
+  .modal .findme-section .lb-text{display:flex;flex-direction:column;min-width:0;}
+  .modal .findme-section .lb-text .v{font-size:13px;font-weight:600;opacity:.72;overflow-wrap:anywhere;margin-top:1px;}
+  /* 品牌 SVG 图标 */
+  .modal .findme-section .ico.ico-svg{padding:0;overflow:hidden;}
+  .modal .findme-section .ico.ico-svg svg{width:100%;height:100%;display:block;border-radius:10px;}
+  /* 二维码小卡片 */
+  .qr-row{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:30px;}
+  .qr-card{
+    background:#fff;
+    border:2px solid var(--ink);
+    border-radius:12px;
+    padding:14px 14px 12px;
+    width:200px;
+    transform:rotate(var(--tr,0deg));
+    box-shadow:5px 5px 0 rgba(60,40,20,.15);
+    transition:transform .25s ease,box-shadow .25s ease;
+    cursor:zoom-in;
+  }
+  .qr-card:hover{transform:rotate(0deg) translate(-2px,-3px);box-shadow:8px 8px 0 var(--red);}
+  .qr-card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;display:block;}
+  .qr-name{text-align:center;margin-top:10px;font-size:14px;font-weight:700;color:var(--ink);}
+
+  /* my videos 板块：除标题外统一等线字体 */
+  .modal .videos-section,
+  .modal .videos-section *{
+    font-family:'DengXian','等线','Microsoft YaHei','PingFang SC',sans-serif !important;
+  }
+  .modal .videos-section h2{font-family:'Caveat',cursive !important;font-size:40px;font-weight:700;letter-spacing:0;}
+  .video-slide .work-imgs{display:block;}
+  .video-frame{
+    position:relative;width:100%;aspect-ratio:16/9;
+    border-radius:10px;overflow:hidden;
+    background:#14100a;
+    box-shadow:0 6px 18px rgba(40,25,10,.28);
+  }
+  .video-frame video{width:100%;height:100%;object-fit:contain;background:#000;display:block;}
+  .video-poster{
+    position:absolute;inset:0;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    background:linear-gradient(135deg,#2a1f12 0%,#4a3418 55%,#2e2110 100%);
+    color:#fdf6e9;
+  }
+  .video-poster .vp-play{
+    width:64px;height:64px;border-radius:50%;
+    background:var(--red);
+    border:3px solid #fdf6e9;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 16px rgba(0,0,0,.45);
+    transition:transform .2s ease;
+  }
+  .video-poster:hover .vp-play{transform:scale(1.12);}
+  .video-poster .vp-play::before{
+    content:'';border-style:solid;border-width:11px 0 11px 18px;
+    border-color:transparent transparent transparent #fff;margin-left:5px;
+  }
+  .video-poster .vp-title{font-size:16px;font-weight:700;letter-spacing:.06em;}
+  .video-poster .vp-hint{font-size:12px;opacity:.82;letter-spacing:.12em;}
+  .video-frame.playing .video-poster{display:none;}
+
+  /* my photography 板块：除标题外统一等线字体 */
+  .modal .photo-section,
+  .modal .photo-section *{
+    font-family:'DengXian','等线','Microsoft YaHei','PingFang SC',sans-serif !important;
+  }
+  .modal .photo-section h2{font-family:'Caveat',cursive !important;font-size:40px;font-weight:700;letter-spacing:0;}
+  .folder-hint{text-align:center;font-size:13px;color:var(--ink-soft);margin:6px 0 20px;font-weight:600;}
+  .folders{display:flex;gap:54px;justify-content:center;}
+  .photo-folder{
+    background:none;border:none;cursor:pointer;padding:0;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    transform:rotate(var(--tr,0deg));
+    transition:transform .25s ease;
+  }
+  .photo-folder:hover{transform:rotate(0deg) translateY(-5px);}
+  .photo-folder .folder-art{width:132px;filter:drop-shadow(0 9px 10px rgba(60,40,20,.28));transition:filter .25s;}
+  .photo-folder:hover .folder-art{filter:drop-shadow(0 14px 16px rgba(60,40,20,.36));}
+  .photo-folder .folder-name{
+    background:var(--red);color:#fff;font-weight:700;font-size:15px;letter-spacing:.06em;
+    padding:5px 20px;border-radius:999px;border:2px solid var(--ink);
+    box-shadow:3px 3px 0 rgba(60,40,20,.22);
+  }
+  .photo-folder .folder-count{font-size:12px;color:var(--ink-soft);font-weight:600;}
+  /* 撒照片区域 */
+  .scatter-area{
+    position:relative;height:400px;margin-top:28px;
+    border:2px dashed rgba(120,90,50,.3);border-radius:16px;
+    background:rgba(255,255,255,.4);
+    overflow:hidden;padding:18px;
+    box-sizing:border-box;
+  }
+  .photo-set{position:absolute;inset:18px;pointer-events:none;}
+  .scatter-photo{
+    position:absolute;left:var(--x);top:var(--y);
+    width:132px;
+    background:#fff;padding:7px 7px 9px;border-radius:3px;
+    box-shadow:0 10px 22px rgba(40,25,10,.28);
+    pointer-events:auto;cursor:zoom-in;
+    opacity:0;
+    transform:translate(-50%,-180%) scale(.15) rotate(0deg);
+    transition:transform .55s cubic-bezier(.18,1.15,.3,1),opacity .3s ease;
+  }
+  .scatter-photo img{width:100%;display:block;border-radius:2px;}
+  .photo-set.open .scatter-photo{
+    opacity:1;
+    transform:translate(-50%,0) scale(1) rotate(var(--r));
+    transition-delay:var(--d);
+  }
+
+  /* about me 板块：除标题外统一等线字体 */
+  .modal .about-section,
+  .modal .about-section *{
+    font-family:'DengXian','等线','Microsoft YaHei','PingFang SC',sans-serif !important;
+  }
+  .modal .about-section h2{font-family:'Caveat',cursive !important;font-size:40px;font-weight:700;letter-spacing:0;}
+  .modal .about-section .body{font-size:15px;line-height:1.95;text-align:left;}
+  .modal .about-section .body b{font-weight:700;}
+  .modal .about-section .about-from{
+    text-align:center;font-size:13px;color:var(--ink-soft);font-weight:700;
+    letter-spacing:.15em;margin:22px 0 4px;
+  }
+  .modal .about-section .tags{gap:9px;margin-top:12px;}
+  .modal .about-section .tag{
+    font-family:'DengXian','等线',sans-serif !important;
+    font-size:13px;font-weight:600;
+    padding:4px 14px;border-radius:999px;
+    border:1.5px solid var(--ink-soft);
+    background:rgba(255,255,255,.55);
+    line-height:1.5;
+  }
+
+  /* little notes 板块：除标题外统一等线字体；便签内容用手写黄油体 */
+  .modal .notes-section,
+  .modal .notes-section *{
+    font-family:'DengXian','等线','Microsoft YaHei','PingFang SC',sans-serif !important;
+  }
+  .modal .notes-section h2{font-family:'Caveat',cursive !important;font-size:40px;font-weight:700;letter-spacing:0;}
+  /* 便签正文 & 署名 用手写黄油体 */
+  .modal .notes-section .note-card,
+  .modal .notes-section .note-card .sig{
+    font-family:'ZCOOL KuaiLe','Caveat',cursive !important;
+    font-size:22px;line-height:1.55;
+  }
+  .notes-input{
+    display:flex;gap:10px;align-items:flex-end;
+    background:#fff;border:2px solid var(--ink);border-radius:14px;
+    padding:10px 12px;margin:12px 0 20px;
+    box-shadow:4px 4px 0 rgba(60,40,20,.18);
+  }
+  .notes-input textarea{
+    flex:1;border:none;outline:none;resize:none;
+    font-size:15px;line-height:1.6;color:var(--ink);
+    background:transparent;min-height:44px;max-height:120px;
+    font-family:inherit;
+  }
+  .notes-input textarea::placeholder{color:#b0a28e;}
+  .notes-send{
+    background:var(--red);color:#fff;border:2px solid var(--ink);
+    border-radius:10px;padding:8px 18px;font-weight:700;font-size:14px;
+    cursor:pointer;white-space:nowrap;
+    box-shadow:2px 2px 0 var(--ink);
+    transition:transform .12s,box-shadow .12s;
+  }
+  .notes-send:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink);}
+  .notes-send:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink);}
+  .notes-send:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+  .notes-wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:6px;}
+  .note-card{position:relative;padding-top:30px;}
+  .note-card .note-del{
+    position:absolute;top:6px;right:8px;z-index:4;
+    width:22px;height:22px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.55);color:var(--ink);
+    font-size:13px;font-weight:700;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    opacity:.5;transition:all .18s ease;
+  }
+  .note-card .note-del:hover{opacity:1;background:var(--red);color:#fff;transform:scale(1.15) rotate(90deg);}
+  .note-card .note-likes{
+    position:absolute;bottom:8px;left:12px;
+    display:flex;align-items:center;gap:5px;
+    background:rgba(255,255,255,.7);border-radius:999px;
+    padding:3px 10px;font-size:12px;font-weight:700;color:var(--ink);
+    cursor:pointer;user-select:none;
+    transition:transform .15s;
+  }
+  .note-card .note-likes:hover{transform:scale(1.08);}
+  .note-card .note-likes:active{transform:scale(.94);}
+  .note-card .note-likes .heart{font-size:14px;}
+  .note-card .note-likes.liked .heart{filter:drop-shadow(0 0 2px var(--red));}
+  .note-card .heart-stream{
+    position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:3;
+  }
+  .fly-heart{
+    position:absolute;font-size:20px;left:50%;bottom:18px;
+    transform:translateX(-50%);
+    pointer-events:none;
+    animation:flyUp 1.6s ease-out forwards;
+    text-shadow:0 1px 2px rgba(0,0,0,.15);
+  }
+  @keyframes flyUp{
+    0%{transform:translateX(-50%) translateY(0) scale(.5) rotate(0);opacity:0;}
+    15%{opacity:1;transform:translateX(-50%) translateY(-12px) scale(1.15) rotate(var(--rot,0deg));}
+    100%{transform:translateX(-50%) translateY(-180px) scale(.7) rotate(var(--rot2,0deg));opacity:0;}
+  }
+
+  /* 灯箱：点击作品图放大 */
+  .lightbox{
+    position:fixed;inset:0;z-index:300;
+    background:rgba(40,30,18,.86);
+    backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;
+    padding:40px;
+    opacity:0;pointer-events:none;
+    transition:opacity .25s;
+  }
+  .lightbox.open{opacity:1;pointer-events:auto;}
+  .lightbox img{
+    max-width:92vw;max-height:86vh;
+    width:auto;height:auto;
+    border-radius:4px;
+    box-shadow:0 24px 70px rgba(0,0,0,.55);
+    transform:scale(.92);
+    transition:transform .28s cubic-bezier(.34,1.56,.64,1);
+  }
+  .lightbox.open img{transform:scale(1);}
+  .lightbox .lb-close{
+    position:absolute;top:22px;right:28px;
+    width:46px;height:46px;border-radius:50%;
+    border:2px solid var(--chalk);background:transparent;
+    color:var(--chalk);font-size:19px;cursor:pointer;
+    font-family:inherit;line-height:1;
+    transition:transform .2s, background .2s, color .2s;
+  }
+  .lightbox .lb-close:hover{transform:rotate(90deg) scale(1.08);background:var(--chalk);color:var(--ink);}
+  .lightbox .lb-hint{
+    position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+    color:rgba(253,250,243,.75);
+    font-size:14px;letter-spacing:.15em;
+    pointer-events:none;
+  }
+
   /* surprise */
   .surprise-box{text-align:center;position:relative;}
   .surprise-box img{width:210px;margin:6px auto 10px;display:block;
@@ -484,13 +826,6 @@
   }
   .surprise-box button:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--red);}
   .confetti{position:absolute;width:10px;height:14px;top:40%;z-index:5;pointer-events:none;}
-
-  /* camera flash */
-  .flash{
-    position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:200;
-  }
-  .flash.go{animation:flashShot .45s ease-out;}
-  @keyframes flashShot{0%{opacity:0}12%{opacity:.95}100%{opacity:0}}
 
   @media (max-width:900px){
     .topbar{padding:14px 18px;flex-wrap:wrap;gap:8px;}
@@ -625,119 +960,238 @@
     </div>
   </div>
 
-  <div class="flash" id="flash"></div>
+  <!-- 灯箱：点击作品图放大 -->
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" id="lbClose" aria-label="close">✕</button>
+    <img id="lightboxImg" src="" alt="作品大图">
+    <div class="lb-hint">点击任意处或按 Esc 关闭</div>
+  </div>
 
 <script>
 /* ---------------- content data ---------------- */
-const IMG = (prompt, size) =>
-  `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=${size}`;
+/* 摄影文件夹：点击撒出照片 */
+const photoFolders = [
+  {
+    id: 'portrait', name: '人像', en: 'PORTRAIT',
+    photos: [1,2,3,4,5].map(i => `人像${i}.jpg`),
+    /* [x%, y%, 旋转角度] —— 坐标控制在框内 */
+    pos: [[20,10,-8],[38,38,6],[55,8,-3],[72,40,9],[86,12,-6]],
+  },
+  {
+    id: 'landscape', name: '风景', en: 'LANDSCAPE',
+    photos: [1,2,3,4,5].map(i => `风景${i}.jpg`),
+    pos: [[20,16,6],[38,56,-7],[55,10,4],[72,54,-5],[86,20,7]],
+  },
+];
 
-const designWorks = [
-  ['马戏团主题海报', 'circus themed graphic design poster, red and pink doodle illustrations, cream paper background, playful hand drawn style'],
-  ['品牌视觉识别', 'brand identity design mockup, business cards and stickers flat lay, pastel colors, minimal aesthetic'],
-  ['杂志排版设计', 'editorial magazine spread layout design, typography focused, warm beige tones'],
-  ['烘焙包装设计', 'creative packaging design for cookies, cute illustration style, pastel pink'],
-  ['梦境插画', 'dreamy surreal digital illustration art print, soft pastel colors, whimsical mood'],
-  ['字体海报', 'bold typography poster design, retro print style, warm red and cream colors'],
-];
-const photoWorks = [
-  ['黄昏的街道', 'film photograph of city street at dusk, warm tones, grainy nostalgic mood'],
-  ['窗边的肖像', 'soft portrait photo on film, natural window light, cozy mood'],
-  ['早晨的咖啡', 'cup of coffee on wooden table in morning light, film photography aesthetic'],
-  ['海边的夏天', 'seaside landscape on film, blue sky and waves, nostalgic summer mood'],
-  ['花与阳光', 'close up of wild flowers in sunlight, film grain, soft focus'],
-  ['霓虹夜路', 'neon lit street at night on film, cinematic moody atmosphere'],
-];
-const videoWorks = [
-  ['旅行 Vlog', 'travel vlog thumbnail, cinematic city view at golden sunset, warm tones'],
-  ['短片作品', 'short film scene, cozy room with warm lamp light, cinematic mood'],
-  ['创作幕后', 'behind the scenes in art studio, creative process, warm lighting'],
+/* 真实设计作品（每组 = 一个展览展位） */
+const designProjects = [
+  {
+    title: '「旷野电波」节目宣传主视觉海报',
+    badge: 'FHSS Radio · 宁波诺丁汉大学人文社科学院',
+    desc: '这两张海报是我在宁波诺丁汉大学人文社科学院"旷野电波"项目组实习期间，制作的节目宣传主视觉海报。设计以蓝橙配色和中英文字体组合为主要视觉语言，通过富有节奏感的线条、色块与错落排版，呼应播客开放、多元的交流氛围。',
+    images: ['播客海报（A3）.png', '节目海报第二期.png'],
+    link: null,
+  },
+  {
+    title: '「旷野电波」周边物料设计',
+    badge: 'FHSS Radio · 杯子 / 杯垫 / 书签',
+    desc: '本系列"旷野电波"周边产品由节目海报的设计元素衍生而来，涵盖杯子、杯垫与书签。设计延续海报鲜明的配色、特色字体与品牌标识，将节目的视觉语言融入日常使用场景。从周边设计、与厂家沟通定制到成品摄影，均由本人独立完成，实现从平面创意到实物呈现的完整实践。',
+    images: ['周边2.jpg'],
+    link: null,
+    land: true,
+  },
+  {
+    title: '「旷野电波」第12期 · 站在20岁的交叉路口',
+    badge: 'FHSS Radio Issue 12 · 节目宣传海报与横幅',
+    desc: '本系列海报为"旷野电波"第12期节目设计，围绕"站在20岁的交叉路口，限时体验大人世界"的主题，以明亮的橙色搭配蓝绿与玫红字体，结合舒展跃动的人物插画，呈现青春的活力与探索成长的勇气。',
+    images: ['海报3.png', '海报3横板.png'],
+    link: 'https://mp.weixin.qq.com/s/3KddCBoQj4Qf1Ywy-PqE0w',
+    layout: 'stack',
+  },
+  {
+    title: '「旷野电波」第9期 · 毕业后我在社区做什么？',
+    badge: 'FHSS Radio Issue 09 · 节目宣传海报与横幅',
+    desc: '本系列海报为"旷野电波"第9期节目设计，围绕"毕业后我在社区做什么？"的主题，以蓝绿色为主色调，搭配橙色与玫红文字营造鲜明、活泼的视觉氛围。画面以等距视角的社区插画为核心，通过建筑、街道与公共空间呼应节目内容。',
+    images: ['海报4.png', '海报4横板.png'],
+    link: 'https://mp.weixin.qq.com/s/fwGaIoW_rpTRqHRi4nJoeQ',
+    layout: 'stack',
+  },
+  {
+    title: '「旷野电波」第11期 · 大学生零基础办展是怎样一种体验？',
+    badge: 'FHSS Radio Issue 11 · 节目宣传海报与横幅',
+    desc: '本系列海报为"旷野电波"第11期节目设计，围绕"大学生零基础办展是怎样一种体验？"的主题，以亮绿色为主色调，搭配深绿与蓝绿文字，呈现鲜活的探索气息。画面结合植物、座椅与艺术装置感插画，呼应策展中的创意表达与空间营造。',
+    images: ['海报5.png', '海报5横板.png'],
+    link: 'https://mp.weixin.qq.com/s/nehCa9VauHeDtdKaO88z-w',
+    layout: 'stack',
+  },
+  {
+    title: '「Blossoms in the Mud」电影节主题海报',
+    badge: 'Course Project · 电影节主视觉',
+    desc: '本海报为学生课程作业，借助AI制作，以"Blossoms in the Mud"为电影节主题。设计采用深色底纹、低饱和花卉与米白衬线字体，通过大面积留白与克制排版，营造简约而富有质感的视觉氛围，以暗处盛放的花朵呼应困境中的生命力。',
+    images: ['海报6.jpg'],
+    link: 'https://mp.weixin.qq.com/s/zg-ipgqxGOfqU7JzfWW_LA',
+  },
 ];
 
 const SECTIONS = {
   about: `
+    <div class="about-section">
     <h2>about me</h2>
-    <div class="sub">— 一张正式的「创意执照」—</div>
-    <p class="body">你好呀，我是 <b>Ge Chu</b>。这张创意执照证明我被正式授权：去创作、去表达、去把脑海里奇奇怪怪的想法都变成看得见的东西。</p>
-    <p class="body">我喜欢视觉设计、摄影和一切有温度的手作感。相信「stay curious, make it visible」——保持好奇，并把它做出来给世界看。</p>
+    <div class="sub">— 探索前须知 —</div>
+    <p class="body">Heya，我是<b>褚歌</b>！很高兴你能点开我 vibecoding 的手搓作品集~</p>
+    <p class="body">我是 27 届纯血传播学背景的应届生，目前就读于<b>新加坡国立大学</b>传播学硕士项目，同时也在参与今年的秋招。</p>
+    <p class="body">我打赌你已经看腻了各种令人审美疲劳的简历和作品集——那既然来了，就留下来让眼睛和大脑歇一歇，尽情探索这个作品集的奇妙玩法吧 =⩌⩊⩌=</p>
+    <div class="about-from">—— 来自：</div>
     <div class="tags">
-      <span class="tag" style="--tr:-2deg">✦ Visual Design</span>
-      <span class="tag" style="--tr:1.5deg">✦ Photography</span>
-      <span class="tag" style="--tr:-1deg">✦ Illustration</span>
-      <span class="tag" style="--tr:2deg">✦ Video Editing</span>
-      <span class="tag" style="--tr:-2.5deg">✦ Creative Writing</span>
+      <span class="tag">#上美集团产品营销实习生</span>
+      <span class="tag">#得物产品运营实习生</span>
+      <span class="tag">#阳狮媒介投放与分析实习生</span>
+      <span class="tag">#鬼点子生产者</span>
+      <span class="tag">#5G速度冲浪者</span>
+      <span class="tag">#热衷审美积累之人</span>
+      <span class="tag">#不吃压力之人</span>
+      <span class="tag">#接到面邀后决定和你慢慢来之人</span>
     </div>
-    <p class="body" style="text-align:center;margin-top:18px;font-family:'Caveat',cursive;font-size:24px;">Nice to meet you ♡</p>
+    </div>
   `,
   notes: `
+    <div class="notes-section">
     <h2>little notes</h2>
-    <div class="sub">— 钉在板上的碎碎念 —</div>
-    <div class="note-grid">
-      <div class="note-card y" style="--tr:-2.5deg">stay curious,<br>make it visible.<span class="sig">— gc</span></div>
-      <div class="note-card p" style="--tr:2deg">把平凡的日子<br>拍成值得纪念的瞬间。<span class="sig">— 关于摄影</span></div>
-      <div class="note-card b" style="--tr:-1.5deg">设计不是让东西变好看，<br>是让想法被理解。<span class="sig">— 关于设计</span></div>
-      <div class="note-card g" style="--tr:2.5deg">允许一切发生，<br>然后勇敢地记录下来。<span class="sig">— 给自己</span></div>
+    <div class="sub">— 留下你的想法吧 —</div>
+    <div class="notes-input">
+      <textarea id="noteInput" rows="1" maxlength="120" placeholder="说点什么吧～（最多 120 字）"></textarea>
+      <button class="notes-send" id="noteSend">发送</button>
+    </div>
+    <div class="notes-wall" id="notesWall"></div>
     </div>
   `,
   findme: `
+    <div class="findme-section">
     <h2>find me</h2>
     <div class="sub">— 来这些地方找我玩 —</div>
     <div class="link-list">
-      <a class="link-btn" href="mailto:hello@example.com" style="--tr:-1.5deg"><span class="ico" style="background:#e8a33d">@</span>Email<br>hello@example.com</a>
-      <a class="link-btn" href="#" style="--tr:1.5deg"><span class="ico" style="background:#e1306c">In</span>Instagram<br>@gechu.studio</a>
-      <a class="link-btn" href="#" style="--tr:-1deg"><span class="ico" style="background:#ff2742">小</span>小红书<br>@GE_CHU</a>
-      <a class="link-btn" href="#" style="--tr:2deg"><span class="ico" style="background:#24292e">Gh</span>GitHub<br>@gechu</a>
-      <a class="link-btn" href="#" style="--tr:-2deg"><span class="ico" style="background:#00a1d6">B</span>Bilibili<br>@GE_CHU</a>
-      <a class="link-btn" href="#" style="--tr:1deg"><span class="ico" style="background:#07c160">微</span>WeChat<br>gechu_design</a>
+      <a class="link-btn" href="mailto:chuge260@outlook.com" style="--tr:-1.5deg"><span class="ico" style="background:#e8a33d">@</span><span class="lb-text">Email<span class="v">chuge260@outlook.com</span></span></a>
+      <a class="link-btn" href="tel:+8618679101121" style="--tr:1.5deg"><span class="ico ico-svg" style="background:#34c759" aria-label="phone"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span><span class="lb-text">电话<span class="v">+86 18679101121</span></span></a>
+      <a class="link-btn" href="https://www.instagram.com/cggoodluck_/" target="_blank" rel="noopener" style="--tr:-1deg"><span class="ico ico-svg" aria-label="instagram"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="igGrad" x1="0" y1="24" x2="24" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#feda75"/><stop offset=".28" stop-color="#fa7e1e"/><stop offset=".52" stop-color="#d62976"/><stop offset=".75" stop-color="#962fbf"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#igGrad)"/><g fill="none" stroke="#fff" stroke-width="2"><rect x="6.2" y="6.2" width="11.6" height="11.6" rx="3.6"/><circle cx="12" cy="12" r="2.7"/></g><circle cx="16.6" cy="7.4" r="1.15" fill="#fff"/></svg></span><span class="lb-text">Instagram<span class="v">@cggoodluck_</span></span></a>
+      <div class="link-btn" style="--tr:2deg"><span class="ico ico-svg" style="background:#07c160" aria-label="wechat"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M8.7 3C4.9 3 2 5.6 2 8.8c0 1.8 1 3.4 2.6 4.5L4 15.6l2.6-1.4c.7.2 1.4.3 2.1.3h.4c-.1-.4-.2-.9-.2-1.3 0-2.9 2.8-5.3 6.3-5.3h.5C15.1 5.1 12.2 3 8.7 3z"/><circle cx="6.6" cy="8" r="1" fill="#07c160"/><circle cx="10.8" cy="8" r="1" fill="#07c160"/><path fill="#fff" d="M22 13.1c0-2.7-2.6-4.9-5.7-4.9s-5.7 2.2-5.7 4.9 2.6 4.9 5.7 4.9c.7 0 1.3-.1 1.9-.3l2.2 1.2-.6-2c1.4-.9 2.2-2.3 2.2-3.8z"/><circle cx="14.3" cy="12.4" r=".9" fill="#07c160"/><circle cx="18.3" cy="12.4" r=".9" fill="#07c160"/></svg></span><span class="lb-text">WeChat<span class="v">cggoodluck_</span></span></div>
     </div>
-    <p class="body" style="text-align:center;margin-top:22px;font-family:'Caveat',cursive;font-size:23px;">链接可以换成你真实的账号哦 ♡</p>
+    <div class="qr-row">
+      <div class="qr-card" style="--tr:-1.5deg">
+        <img src="小红书二维码.jpg" alt="小红书二维码" loading="lazy">
+        <div class="qr-name">小红书 · @炸鸡拌饭</div>
+      </div>
+      <div class="qr-card" style="--tr:1.5deg">
+        <img src="抖音二维码.jpg" alt="抖音二维码" loading="lazy">
+        <div class="qr-name">抖音 · @炸鸡拌饭</div>
+      </div>
+    </div>
+    </div>
   `,
   design: `
+    <div class="design-section">
     <h2>my design</h2>
     <div class="sub">— 一些视觉与平面作品 —</div>
     <div class="carousel-wrap">
       <button class="carousel-btn prev" data-carousel="designCarousel">‹</button>
       <button class="carousel-btn next" data-carousel="designCarousel">›</button>
       <div class="carousel" id="designCarousel">
-        ${designWorks.map(([cap, p]) => `
-          <div class="shot"><img src="${IMG(p, 'square')}" alt="${cap}" loading="lazy"><div class="cap">${cap}</div></div>
+        ${designProjects.map(p => `
+          <div class="work-slide${p.land ? ' land' : ''}${p.layout ? ' ' + p.layout : ''}">
+            <div class="work-imgs">
+              ${p.images.map(src => `<img src="${encodeURI(src)}" alt="${p.title}" loading="lazy">`).join('')}
+            </div>
+            <h3>${p.title}</h3>
+            ${p.badge ? `<div class="work-badge">${p.badge}</div>` : ''}
+            <p class="work-desc">${p.desc}</p>
+            ${p.link ? `<div class="work-link-wrap"><a class="work-link" href="${p.link}" target="_blank" rel="noopener">点击查看推文 →</a></div>` : ''}
+          </div>
         `).join('')}
       </div>
+    </div>
     </div>
   `,
   photography: `
+    <div class="photo-section">
     <h2>my photography</h2>
-    <div class="sub">— 拍立得记住的瞬间 —</div>
-    <div class="carousel-wrap">
-      <button class="carousel-btn prev" data-carousel="photoCarousel">‹</button>
-      <button class="carousel-btn next" data-carousel="photoCarousel">›</button>
-      <div class="carousel" id="photoCarousel">
-        ${photoWorks.map(([cap, p]) => `
-          <div class="shot"><img src="${IMG(p, 'square')}" alt="${cap}" loading="lazy"><div class="cap">${cap}</div></div>
-        `).join('')}
-      </div>
+    <div class="sub">— 快门记住的瞬间 —</div>
+    <div class="folder-hint">点开文件夹试试吧！</div>
+    <div class="folders">
+      ${photoFolders.map((f,i) => `
+        <button class="photo-folder" data-set="${f.id}" style="--tr:${i===0?-2:2}deg" type="button">
+          <svg class="folder-art" viewBox="0 0 130 96" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="26" width="114" height="62" rx="9" fill="#e9b87a" stroke="#7c4f21" stroke-width="2.5"/>
+            <path d="M18 26 v-7 a7 7 0 0 1 7-7 h22 l9 14 z" fill="#e9b87a" stroke="#7c4f21" stroke-width="2.5" stroke-linejoin="round"/>
+            <rect x="30" y="9" width="26" height="21" rx="3" fill="#fff" stroke="#c9a876" stroke-width="1.5"/>
+            <rect x="8" y="38" width="114" height="50" rx="9" fill="#f4cf96" stroke="#7c4f21" stroke-width="2.5"/>
+            <rect x="24" y="50" width="82" height="26" rx="5" fill="#fdf6e9" stroke="#caa977" stroke-width="1.5"/>
+          </svg>
+          <div class="folder-name">${f.name} · ${f.photos.length}张</div>
+          <div class="folder-count">${f.en}</div>
+        </button>
+      `).join('')}
+    </div>
+    <div class="scatter-area" id="scatterArea">
+      ${photoFolders.map(f => `
+        <div class="photo-set" data-set="${f.id}">
+          ${f.photos.map((src,n) => {
+            const p = f.pos[n];
+            return `<img class="scatter-photo" alt="${f.name}作品${n+1}" loading="lazy" src="${encodeURI(src)}" style="--x:${p[0]}%;--y:${p[1]}%;--r:${p[2]}deg;--d:${n*70}ms">`;
+          }).join('')}
+        </div>
+      `).join('')}
+    </div>
     </div>
   `,
   videos: `
+    <div class="videos-section">
     <h2>my videos</h2>
-    <div class="sub">— 马戏团开演，请入场 —</div>
+    <div class="sub">— 好戏开始，请入场 —</div>
     <div class="carousel-wrap">
       <button class="carousel-btn prev" data-carousel="videoCarousel">‹</button>
       <button class="carousel-btn next" data-carousel="videoCarousel">›</button>
       <div class="carousel" id="videoCarousel">
-        ${videoWorks.map(([cap, p]) => `
-          <div class="shot landscape video-cell"><img src="${IMG(p, 'landscape_4_3')}" alt="${cap}" loading="lazy"><div class="play"></div><div class="cap">${cap}</div></div>
-        `).join('')}
+        <div class="work-slide video-slide">
+          <div class="work-imgs">
+            <div class="video-frame">
+              <video controls preload="none" playsinline src="电影混剪.mp4"></video>
+              <div class="video-poster">
+                <div class="vp-play"></div>
+                <div class="vp-title">泥泞中的花 Blossoms in the Mud</div>
+                <div class="vp-hint">点击播放 · 电影混剪</div>
+              </div>
+            </div>
+          </div>
+          <h3>泥泞中的花 Blossoms in the Mud</h3>
+          <div class="work-badge">电影混剪 · Film Remix</div>
+          <p class="work-desc">这是一部以"逆境中绽放的温暖与人性光辉"为主题的电影混剪作品。它聚焦于那些生活在社会边缘、被主流叙事所忽视，却依然默默坚守尊严的普通人。在当今媒体文化日益痴迷于成功和虚假幸福的时代，那些在困境中保持温暖与人性的人们的真实经历正被边缘化甚至抹杀。</p>
+        </div>
+        <div class="work-slide video-slide">
+          <div class="work-imgs">
+            <div class="video-frame">
+              <video controls preload="none" playsinline src="纪录片.mp4"></video>
+              <div class="video-poster">
+                <div class="vp-play"></div>
+                <div class="vp-title">快门价码 The Price of a Shutter</div>
+                <div class="vp-hint">点击播放 · 独立纪录片</div>
+              </div>
+            </div>
+          </div>
+          <h3>快门价码 The Price of a Shutter</h3>
+          <div class="work-badge">独立纪录片 · Documentary</div>
+          <p class="work-desc">这是一部我独立制作的纪录片，聚焦于社交媒体催生的"陪拍"文化。第一部分以参与式拍摄记录我与摄影师Machi从陌生到熟悉的过程，呈现陪伴、交流与积极反馈如何带来被理解和认可的体验。第二部分通过创作者直视镜头及制作幕后，打破沉浸感，反思并解构前半段的体验，追问这种消费是否本质上是通过购买他人的正面反馈，获取对自我价值的外部认可。</p>
+        </div>
       </div>
     </div>
     <p class="body" style="text-align:center;margin-top:20px;font-family:'Caveat',cursive;font-size:23px;">enjoy the show ✦</p>
+    </div>
   `,
   surprise: `
     <div class="surprise-box">
       <img src="苹果挂件.PNG" alt="surprise">
       <div class="big">a little surprise</div>
       <p class="body" style="max-width:420px;margin:0 auto;">你发现了藏在板上的小苹果！<br>谢谢你认真逛到这里，送你一场小小的彩带雨 ✦</p>
-      <button id="confettiBtn">点我收礼物 ♡</button>
+      <button id="confettiBtn" style="font-family:'DengXian','等线','Microsoft YaHei','PingFang SC',sans-serif;font-weight:700;letter-spacing:.08em;">点我收礼物 ♡</button>
     </div>
   `,
 };
@@ -746,9 +1200,57 @@ const SECTIONS = {
 const overlay = document.getElementById('overlay');
 const modalContent = document.getElementById('modalContent');
 const closeBtn = document.getElementById('closeBtn');
-const flash = document.getElementById('flash');
 
+/* ---------------- little notes 留言板 ---------------- */
+const NOTE_COLORS = ['y','p','b','g'];
+const HEART_EMOJIS = ['❤️','💖','💘','💕','💗','💝','🧡','💛','💚','💙','💜','🩷'];
+let notesData = [];
+let noteIdSeq = 1;
+let likedNotes = new Set(); /* 已点赞的留言 id（本次会话） */
+
+function renderNotesWall(){
+  const wall = document.getElementById('notesWall');
+  if(!wall) return;
+  wall.innerHTML = notesData.map(n => {
+    const liked = likedNotes.has(n.id);
+    return `
+      <div class="note-card ${n.color}" style="--tr:${(Math.random()*5-2.5).toFixed(1)}deg">
+        <button class="note-del" data-id="${n.id}" title="删除这张便签">✕</button>
+        ${n.text.replace(/\n/g,'<br>')}
+        ${n.sig ? `<span class="sig">${n.sig}</span>` : ''}
+        <div class="heart-stream"></div>
+        <div class="note-likes ${liked?'liked':''}" data-id="${n.id}">
+          <span class="heart">${liked?'❤️':'🤍'}</span>
+          <span class="like-count">${n.likes}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function spawnHearts(card){
+  const stream = card.querySelector('.heart-stream');
+  if(!stream) return;
+  const count = 6 + Math.floor(Math.random()*4);
+  for(let i=0;i<count;i++){
+    const h = document.createElement('span');
+    h.className = 'fly-heart';
+    h.textContent = HEART_EMOJIS[Math.floor(Math.random()*HEART_EMOJIS.length)];
+    h.style.left = (35 + Math.random()*30) + '%';
+    h.style.fontSize = (16 + Math.random()*14) + 'px';
+    h.style.setProperty('--rot', (Math.random()*60-30)+'deg');
+    h.style.setProperty('--rot2', (Math.random()*120-60)+'deg');
+    h.style.animationDuration = (1.3 + Math.random()*0.6)+'s';
+    h.style.animationDelay = (Math.random()*0.25)+'s';
+    stream.appendChild(h);
+    setTimeout(() => h.remove(), 2200);
+  }
+}
+
+function stopModalVideos(){
+  modalContent.querySelectorAll('video').forEach(v => { try{ v.pause(); }catch(e){} });
+}
 function openSection(key){
+  stopModalVideos();
   modalContent.innerHTML = SECTIONS[key] || '';
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -757,9 +1259,23 @@ function openSection(key){
     btn.addEventListener('click', () => launchConfetti(document.querySelector('.surprise-box')));
     setTimeout(() => launchConfetti(document.querySelector('.surprise-box')), 400);
   }
+  if(key === 'notes'){
+    renderNotesWall();
+    const input = document.getElementById('noteInput');
+    const send = document.getElementById('noteSend');
+    if(input){
+      input.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+        send.disabled = input.value.trim().length === 0;
+      });
+      send.disabled = true;
+    }
+  }
   initCarousels();
 }
 function closeSection(){
+  stopModalVideos();
   overlay.classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -782,14 +1298,7 @@ function initCarousels(){
 }
 
 function triggerSection(key){
-  if(key === 'photography'){
-    flash.classList.remove('go');
-    void flash.offsetWidth;
-    flash.classList.add('go');
-    setTimeout(() => openSection(key), 280);
-  } else {
-    openSection(key);
-  }
+  openSection(key);
 }
 
 /* ---------------- layout persistence + reset ---------------- */
@@ -864,12 +1373,117 @@ document.querySelectorAll('.mainnav a').forEach(a => {
 
 closeBtn.addEventListener('click', closeSection);
 overlay.addEventListener('click', e => { if(e.target === overlay) closeSection(); });
+
+/* ---- 灯箱：点击作品图放大 ---- */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+function openLightbox(src, alt){
+  lightboxImg.src = src;
+  lightboxImg.alt = alt || '作品大图';
+  lightbox.classList.add('open');
+}
+function closeLightbox(){
+  lightbox.classList.remove('open');
+  setTimeout(() => { lightboxImg.src = ''; }, 280);
+}
+document.addEventListener('click', e => {
+  const img = e.target.closest && e.target.closest('.work-imgs img, .qr-card img');
+  if(img && overlay.classList.contains('open')) openLightbox(img.src, img.alt);
+});
+/* 摄影文件夹：点击撒出照片，再点收起；切换文件夹自动收拢另一组 */
+document.addEventListener('click', e => {
+  const folder = e.target.closest && e.target.closest('.photo-folder');
+  if(!folder || !overlay.classList.contains('open')) return;
+  const target = document.querySelector(`.photo-set[data-set="${folder.dataset.set}"]`);
+  if(!target) return;
+  const willOpen = !target.classList.contains('open');
+  document.querySelectorAll('.photo-set.open').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.photo-folder.open').forEach(f => f.classList.remove('open'));
+  if(willOpen){
+    target.classList.add('open');
+    folder.classList.add('open');
+  }
+});
+/* 双击撒出的照片 → 灯箱放大 */
+document.addEventListener('dblclick', e => {
+  const img = e.target.closest && e.target.closest('.scatter-photo');
+  if(img && overlay.classList.contains('open')) openLightbox(img.src, img.alt);
+});
+/* 视频海报：点击后才开始加载并播放（preload="none"，避免无谓请求/中止报错） */
+document.addEventListener('click', e => {
+  const poster = e.target.closest && e.target.closest('.video-poster');
+  if(!poster || !overlay.classList.contains('open')) return;
+  const frame = poster.closest('.video-frame');
+  const v = frame && frame.querySelector('video');
+  if(!v) return;
+  frame.classList.add('playing');
+  v.addEventListener('play', () => frame.classList.add('playing'), { once:true });
+  v.addEventListener('error', () => frame.classList.remove('playing'), { once:true });
+  const p = v.play();
+  if(p && p.catch) p.catch(() => frame.classList.remove('playing'));
+});
+
+/* little notes：发送留言 */
+document.addEventListener('click', e => {
+  const send = e.target.closest && e.target.closest('#noteSend');
+  if(!send || !overlay.classList.contains('open')) return;
+  const input = document.getElementById('noteInput');
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text) return;
+  notesData.unshift({
+    id: noteIdSeq++,
+    text: text,
+    sig: '',
+    color: NOTE_COLORS[notesData.length % NOTE_COLORS.length],
+    likes: 0,
+  });
+  input.value = '';
+  input.style.height = 'auto';
+  send.disabled = true;
+  renderNotesWall();
+});
+/* little notes：点赞 + 飘心动效 */
+document.addEventListener('click', e => {
+  const likeBtn = e.target.closest && e.target.closest('.note-likes');
+  if(!likeBtn || !overlay.classList.contains('open')) return;
+  const id = parseInt(likeBtn.dataset.id, 10);
+  const note = notesData.find(n => n.id === id);
+  if(!note) return;
+  const wasLiked = likedNotes.has(id);
+  if(wasLiked){
+    likedNotes.delete(id);
+    note.likes = Math.max(0, note.likes - 1);
+  } else {
+    likedNotes.add(id);
+    note.likes += 1;
+    spawnHearts(likeBtn.closest('.note-card'));
+  }
+  likeBtn.classList.toggle('liked', !wasLiked);
+  likeBtn.querySelector('.heart').textContent = !wasLiked ? '❤️' : '🤍';
+  likeBtn.querySelector('.like-count').textContent = note.likes;
+});
+/* little notes：删除便签 */
+document.addEventListener('click', e => {
+  const del = e.target.closest && e.target.closest('.note-del');
+  if(!del || !overlay.classList.contains('open')) return;
+  const id = parseInt(del.dataset.id, 10);
+  notesData = notesData.filter(n => n.id !== id);
+  likedNotes.delete(id);
+  renderNotesWall();
+});
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if(e.target !== lightboxImg) closeLightbox(); });
+
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){ closeSection(); return; }
-  if(!overlay.classList.contains('open')) return;
+  if(e.key === 'Escape'){
+    if(lightbox.classList.contains('open')){ closeLightbox(); return; }
+    closeSection(); return;
+  }
+  if(!overlay.classList.contains('open') || lightbox.classList.contains('open')) return;
   const carousel = document.querySelector('.modal .carousel');
   if(!carousel) return;
-  const shot = carousel.querySelector('.shot');
+  const shot = carousel.querySelector('.shot, .work-slide');
   const step = shot ? shot.offsetWidth + 22 : 300;
   if(e.key === 'ArrowLeft'){ carousel.scrollBy({ left: -step, behavior: 'smooth' }); e.preventDefault(); }
   if(e.key === 'ArrowRight'){ carousel.scrollBy({ left: step, behavior: 'smooth' }); e.preventDefault(); }
