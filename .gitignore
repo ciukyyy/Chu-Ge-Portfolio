@@ -16,3 +16,8 @@ desktop.ini
 
 # 视频原片（网页版已转码为根目录小体积 mp4）
 视频原片/
+
+# 本地预览服务器临时脚本与日志
+_serve_tmp.ps1
+_serve.log
+_serve.pid

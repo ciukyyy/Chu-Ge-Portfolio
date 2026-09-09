@@ -975,7 +975,7 @@ const SECTIONS = {
     <div class="photo-section">
     <h2>my photography</h2>
     <div class="sub">— 快门记住的瞬间 —</div>
-    <div class="folder-hint">点开文件夹试试吧！</div>
+    <div class="folder-hint">点击文件夹，切换人像 · 风景照片 · 双击照片可放大</div>
     <div class="folders">
       ${photoFolders.map((f,i) => `
         <button class="photo-folder" data-set="${f.id}" style="--tr:${i===0?-2:2}deg" type="button">
@@ -986,7 +986,7 @@ const SECTIONS = {
             <rect x="8" y="38" width="114" height="50" rx="9" fill="#f4cf96" stroke="#7c4f21" stroke-width="2.5"/>
             <rect x="24" y="50" width="82" height="26" rx="5" fill="#fdf6e9" stroke="#caa977" stroke-width="1.5"/>
           </svg>
-          <div class="folder-name">${f.name} · ${f.photos.length}张</div>
+          <div class="folder-name">${f.name}</div>
           <div class="folder-count">${f.en}</div>
         </button>
       `).join('')}
@@ -1132,6 +1132,15 @@ function openSection(key){
       send.disabled = true;
     }
   }
+  if(key === 'photography'){
+    /* 照片默认就撒在框内：等首帧绘制后再给人像组加 open，播放飞出动画 */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const set = modalContent.querySelector('.photo-set[data-set="portrait"]');
+      const fld = modalContent.querySelector('.photo-folder[data-set="portrait"]');
+      if(set) set.classList.add('open');
+      if(fld) fld.classList.add('open');
+    }));
+  }
   initCarousels();
 }
 function closeSection(){
@@ -1250,19 +1259,16 @@ document.addEventListener('click', e => {
   const img = e.target.closest && e.target.closest('.work-imgs img, .qr-card img');
   if(img && overlay.classList.contains('open')) openLightbox(img.src, img.alt);
 });
-/* 摄影文件夹：点击撒出照片，再点收起；切换文件夹自动收拢另一组 */
+/* 摄影文件夹：照片默认已撒在框内，点击只在人像/风景两组间切换，不再收起 */
 document.addEventListener('click', e => {
   const folder = e.target.closest && e.target.closest('.photo-folder');
   if(!folder || !overlay.classList.contains('open')) return;
   const target = document.querySelector(`.photo-set[data-set="${folder.dataset.set}"]`);
-  if(!target) return;
-  const willOpen = !target.classList.contains('open');
+  if(!target || target.classList.contains('open')) return;
   document.querySelectorAll('.photo-set.open').forEach(s => s.classList.remove('open'));
   document.querySelectorAll('.photo-folder.open').forEach(f => f.classList.remove('open'));
-  if(willOpen){
-    target.classList.add('open');
-    folder.classList.add('open');
-  }
+  target.classList.add('open');
+  folder.classList.add('open');
 });
 /* 双击撒出的照片 → 灯箱放大 */
 document.addEventListener('dblclick', e => {
