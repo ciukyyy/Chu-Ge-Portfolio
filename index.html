@@ -538,6 +538,23 @@
   .video-poster .vp-title{font-size:16px;font-weight:700;letter-spacing:.06em;}
   .video-poster .vp-hint{font-size:12px;opacity:.82;letter-spacing:.12em;}
   .video-frame.playing .video-poster{display:none;}
+  .video-frame .video-error{
+    position:absolute;inset:0;display:none;
+    flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    background:linear-gradient(135deg,#2a1f12 0%,#4a3418 55%,#2e2110 100%);
+    color:#fdf6e9;text-align:center;padding:20px;
+  }
+  .video-frame.verr .video-error{display:flex;}
+  .video-frame.verr .video-poster{display:none;}
+  .video-error .ve-txt{font-size:15px;font-weight:700;letter-spacing:.06em;}
+  .video-error .ve-hint{font-size:12px;opacity:.82;letter-spacing:.08em;}
+  .video-error .ve-btn{
+    margin-top:6px;padding:8px 26px;border-radius:999px;cursor:pointer;
+    background:var(--red);color:#fff;border:2px solid #fdf6e9;
+    font:inherit;font-size:13px;font-weight:700;letter-spacing:.12em;
+    box-shadow:0 4px 12px rgba(0,0,0,.4);transition:transform .2s ease;
+  }
+  .video-error .ve-btn:hover{transform:scale(1.07);}
 
   /* my photography 板块：除标题外统一等线字体 */
   .modal .photo-section,
@@ -1252,18 +1269,43 @@ document.addEventListener('dblclick', e => {
   const img = e.target.closest && e.target.closest('.scatter-photo');
   if(img && overlay.classList.contains('open')) openLightbox(img.src, img.alt);
 });
-/* 视频海报：点击后才开始加载并播放（preload="none"，避免无谓请求/中止报错） */
+/* 视频海报：点击后才开始加载并播放（preload="none"，避免无谓请求/中止报错）；失败时展示重试提示 */
+function videoErrorUI(frame){
+  let err = frame.querySelector('.video-error');
+  if(!err){
+    err = document.createElement('div');
+    err.className = 'video-error';
+    err.innerHTML = '<div class="ve-txt">视频加载失败了</div><div class="ve-hint">请检查网络后点击重试，或刷新页面试试</div><button class="ve-btn" type="button">重试</button>';
+    frame.appendChild(err);
+    err.querySelector('.ve-btn').addEventListener('click', ev => {
+      ev.stopPropagation();
+      const vv = frame.querySelector('video');
+      frame.classList.remove('verr');
+      if(vv){ try{ vv.load(); }catch(_){} }
+      playVideo(frame);
+    });
+  }
+  frame.classList.remove('playing');
+  frame.classList.add('verr');
+}
+function playVideo(frame){
+  const v = frame && frame.querySelector('video');
+  if(!v) return;
+  frame.classList.remove('verr');
+  frame.classList.add('playing');
+  v.addEventListener('error', () => videoErrorUI(frame), { once:true });
+  const p = v.play();
+  if(p && p.catch) p.catch(() => {
+    setTimeout(() => {
+      if(v.readyState < 2 && !frame.classList.contains('verr')) frame.classList.remove('playing');
+    }, 1200);
+  });
+}
 document.addEventListener('click', e => {
   const poster = e.target.closest && e.target.closest('.video-poster');
   if(!poster || !overlay.classList.contains('open')) return;
   const frame = poster.closest('.video-frame');
-  const v = frame && frame.querySelector('video');
-  if(!v) return;
-  frame.classList.add('playing');
-  v.addEventListener('play', () => frame.classList.add('playing'), { once:true });
-  v.addEventListener('error', () => frame.classList.remove('playing'), { once:true });
-  const p = v.play();
-  if(p && p.catch) p.catch(() => frame.classList.remove('playing'));
+  if(frame) playVideo(frame);
 });
 
 /* little notes：发送留言 */

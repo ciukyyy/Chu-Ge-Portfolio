@@ -13,3 +13,6 @@ desktop.ini
 .vscode/
 *.swp
 *.swo
+
+# 视频原片（网页版已转码为根目录小体积 mp4）
+视频原片/
