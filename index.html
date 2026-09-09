@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8C%3C/text%3E%3C/svg%3E">
 <style>
   :root{
     --ink:#3d3327;
@@ -23,10 +24,10 @@
   html,body{height:100%;}
   body{
     font-family:'Noto Sans SC',sans-serif;
-    background:#f0e8da;
+    /* 米白色取自背景照片"墙面"像素均值，暖调渐变与照片光线一致，消除拼接痕 */
+    background:#f6e7d5;
     background-image:
-      radial-gradient(ellipse at 50% 0%, rgba(255,250,240,.6), transparent 60%),
-      radial-gradient(ellipse at 50% 100%, rgba(180,155,120,.08), transparent 55%);
+      linear-gradient(155deg, #fcefdf 0%, #f6e7d5 55%, #f2e1cd 100%);
     color:var(--ink);
     min-height:100vh;
     overflow-x:hidden;
@@ -42,7 +43,7 @@
     display:flex;align-items:center;justify-content:space-between;
     gap:20px;
     padding:20px 44px;
-    background:rgba(246,242,233,.92);
+    background:rgba(248,238,222,.92);
     backdrop-filter:blur(6px);
     border-bottom:1px solid rgba(70,60,45,.18);
     font-family:'Montserrat',sans-serif;
@@ -71,13 +72,15 @@
 
   .hint{
     position:fixed;
-    bottom:14px;left:50%;
+    bottom:34px;left:50%;
     transform:translateX(-50%);
-    font-family:'Caveat',cursive;
-    font-size:22px;
+    font-family:'Montserrat','Noto Sans SC',sans-serif;
+    font-size:17px;
+    font-weight:500;
+    letter-spacing:.16em;
     color:var(--ink-soft);
     background:rgba(248,242,228,.9);
-    padding:4px 22px;
+    padding:9px 28px;
     border-radius:30px;
     border:1.5px dashed rgba(107,92,73,.5);
     animation:hintFloat 3s ease-in-out infinite;
@@ -96,19 +99,14 @@
   .board{
     position:relative;
     width:100%;
-    aspect-ratio:1630/1075;
-    border-radius:48px;
-    background-color:#c2a483;
-    /* 细腻短纤维毛毡质感 - 纯净均匀 */
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E"),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.035' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.14'/%3E%3C/svg%3E"),
-      linear-gradient(176deg, rgba(255,248,232,.40) 0%, transparent 42%),
-      linear-gradient(4deg, rgba(75,52,28,.20) 0%, transparent 48%);
-    box-shadow:
-      0 32px 60px rgba(80,60,35,.28),
-      inset 0 4px 12px rgba(255,250,240,.4),
-      inset 0 -8px 20px rgba(70,50,30,.22);
+    aspect-ratio:2426/1760;
+    background:url("背景图.jpg") center/100% 100% no-repeat;
+    /* 照片四周边缘羽化融入页面底色，彻底消除矩形拼接边 */
+    -webkit-mask-image:
+      linear-gradient(to right,  transparent 0%, #000 2.8%, #000 97.2%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 2.8%, #000 97.2%, transparent 100%);
+    -webkit-mask-composite:source-in;
+            mask-composite:intersect;
   }
 
   /* ---------- items ---------- */
@@ -144,123 +142,28 @@
     100%{opacity:1;transform:rotate(var(--r,0deg)) scale(1) translateY(0);}
   }
 
-  #id-card   {left:6.5%; top:13.2%; width:29%;   --r:-1.5deg; z-index:10;}
-  #note      {left:39%;   top:7.8%;  width:18.5%; --r:-7deg;   z-index:13;}
-  #polaroid  {left:53%;   top:24.5%; width:19%;   --r:7deg;    z-index:12;}
-  #poster    {left:74.5%; top:7.2%;  width:20.5%; --r:1deg;    z-index:9;}
-  #camera    {left:8.5%;  top:52%;   width:23%;   --r:0deg;    z-index:16;}
-  #tickets   {left:66%;   top:52%;   width:30%;   --r:-12deg;  z-index:14;}
-  #apple     {left:38%;   top:70%;   width:22%;   --r:-4deg;   z-index:18;}
+  /* 小物件初始位置（= 双击归位位置；贴合真实照片背景：相机坐搁板、苹果挂挂钩） */
+  #id-card   {left:9.53%; top:7.87%;  width:30%;   --r:-1.5deg; z-index:10;}
+  #note      {left:43.19%;top:10.22%; width:16%;   --r:-7deg;   z-index:13;}
+  #polaroid  {left:51.97%;top:24.95%; width:17%;   --r:7deg;    z-index:12;}
+  #poster    {left:70.66%;top:7.08%;  width:22%;   --r:1deg;    z-index:9;}
+  #camera    {left:10.2%; top:49.12%; width:22%;   --r:0deg;    z-index:16;}
+  #tickets   {left:65.88%;top:50.22%; width:28%;   --r:-12deg;  z-index:14;}
+  #apple     {left:40.28%;top:69.16%; width:20%;   --r:-4deg;   z-index:18;}
 
-  /* 米白色毛毡垫 */
-  .mat{
-    position:absolute;
-    left:6%; top:50%;
-    width:54%; height:35%;
-    border-radius:36px;
-    background-color:#e8e2d4;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='2' seed='6' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.10'/%3E%3C/svg%3E"),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.04' numOctaves='2' seed='10' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f2)' opacity='0.14'/%3E%3C/svg%3E"),
-      linear-gradient(175deg, rgba(255,255,255,.55) 0%, transparent 50%),
-      linear-gradient(5deg, rgba(120,100,75,.14) 0%, transparent 55%);
-    box-shadow:
-      0 18px 32px rgba(60,45,28,.28),
-      inset 0 2px 6px rgba(255,255,255,.75),
-      inset 0 -4px 10px rgba(100,85,65,.18);
-    z-index:8;
-    transform:rotate(-.4deg);
-  }
-
-  /* 亚克力透明平台（不参与交互） */
-  .acrylic{
+  /* ---------- 纯装饰贴纸（无交互，贴在白色毛毡垫上） ---------- */
+  .stk{
     position:absolute;
     pointer-events:none;
-    border-radius:14px;
-    background:linear-gradient(180deg,
-      rgba(255,255,255,.62) 0%,
-      rgba(255,255,255,.24) 38%,
-      rgba(226,222,212,.20) 72%,
-      rgba(190,184,172,.30) 100%);
-    box-shadow:
-      0 8px 18px rgba(70,55,35,.20),
-      inset 0 1.5px 1px rgba(255,255,255,.95),
-      inset 0 -3px 6px rgba(120,112,98,.28),
-      inset 2px 0 4px rgba(255,255,255,.35),
-      inset -2px 0 4px rgba(255,255,255,.35);
-    backdrop-filter:blur(1.5px);
+    transform:rotate(var(--r,0deg));
+    filter:drop-shadow(0 10px 12px rgba(60,42,25,.35));
     z-index:15;
+    user-select:none;
   }
-  /* 承托相机的平台：顶面 + 前缘厚度 */
-  .shelf{
-    left:7.2%; top:77.4%;
-    width:25.6%; height:2.6%;
-  }
-  .shelf::after{
-    content:'';position:absolute;left:2%;right:2%;bottom:-38%;height:42%;
-    border-radius:0 0 12px 12px;
-    background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(160,152,138,.28));
-    box-shadow:0 8px 14px rgba(70,55,35,.22), inset 0 -2px 4px rgba(110,100,85,.3);
-  }
-  /* 相机右上侧的透明小搁板 */
-  .ledge{
-    left:35%; top:62.4%;
-    width:21.5%; height:1.7%;
-    border-radius:10px;
-  }
-  .ledge::after{
-    content:'';position:absolute;left:4%;right:4%;bottom:-60%;height:60%;
-    border-radius:0 0 8px 8px;
-    background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(160,152,138,.25));
-    box-shadow:0 6px 10px rgba(70,55,35,.18);
-  }
-
-  /* 四个等距挂钩（木板级层级，压在苹果挂绳上方） */
-  .pegs{position:absolute;inset:0;z-index:20;pointer-events:none;}
-  .pegs .peg{
-    position:absolute;
-    width:1.9%; aspect-ratio:1;
-    border-radius:50%;
-    background:radial-gradient(circle at 35% 28%, #f0cd97, #c08f52 68%, #8a5f30);
-    box-shadow:0 4px 7px rgba(70,50,25,.45), inset 0 -2px 4px rgba(90,55,20,.55), inset 0 1.5px 2px rgba(255,240,210,.8);
-  }
-  .pegs .peg::after{
-    content:'';position:absolute;left:50%;top:88%;
-    width:46%;height:55%;transform:translateX(-50%);
-    border-radius:0 0 40% 40%;
-    background:linear-gradient(180deg,#b07f45,#7d5326);
-    box-shadow:0 3px 5px rgba(70,50,25,.4);
-  }
-
-  /* ---------- annotations ---------- */
-  .notes-svg{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    overflow:visible;
-    pointer-events:none;
-    z-index:30;
-  }
-  .notes-svg .anno-line{
-    fill:none;
-    stroke-width:2.4;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    filter:url(#wobble);
-  }
-  .notes-svg .anno-line.w{stroke:var(--chalk);}
-  .notes-svg .anno-line.k{stroke:var(--ink);}
-  .notes-svg text{
-    font-family:'Caveat',cursive;
-    text-anchor:middle;
-    filter:url(#wobble);
-  }
-  .notes-svg text.w{fill:var(--chalk);}
-  .notes-svg text.k{fill:var(--ink);}
-  .notes-svg .label{font-size:27px;font-weight:600;}
-  .notes-svg .deco{
-    fill:none;stroke-width:2.2;stroke-linecap:round;filter:url(#wobble);
-  }
-  .notes-svg .deco.w{stroke:var(--chalk);}
+  .stk img{display:block;width:100%;height:auto;pointer-events:none;}
+  .stk.pop{animation:popIn .7s cubic-bezier(.34,1.56,.64,1) both;}
+  #stk1{left:35%;   top:53.5%; width:18%;  --r:-3deg;}
+  #stk2{left:41.5%; top:57.5%; width:17%;  --r:-9deg; z-index:17;}
 
   /* ---------- modal ---------- */
   .overlay{
@@ -276,21 +179,35 @@
   .overlay.open{opacity:1;pointer-events:auto;}
   .modal{
     position:relative;
-    width:min(760px,94vw);
-    max-height:86vh;
-    overflow-y:auto;
+    width:min(760px,100%);
+    max-height:88vh;
+    display:flex;
+    flex-direction:column;
     background:var(--paper);
     background-image:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
     border-radius:18px;
-    padding:44px 44px 40px;
     box-shadow:0 30px 70px rgba(40,28,15,.5);
     transform:rotate(-1.2deg) scale(.9);
     transition:transform .4s cubic-bezier(.34,1.56,.64,1);
   }
   .overlay.open .modal{transform:rotate(-.6deg) scale(1);}
-  .modal::-webkit-scrollbar{width:8px;}
-  .modal::-webkit-scrollbar-thumb{background:rgba(107,92,73,.4);border-radius:8px;}
+  /* 内层滚动区：图钉与关闭钮留在外壳上不被裁剪，内容在纸张内部滚动 */
+  #modalContent{
+    flex:1 1 auto;
+    min-height:0;
+    min-width:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    padding:44px 44px 40px;
+    border-radius:18px;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(107,92,73,.4) transparent;
+  }
+  #modalContent::-webkit-scrollbar{width:8px;}
+  #modalContent::-webkit-scrollbar-thumb{background:rgba(107,92,73,.4);border-radius:8px;}
+  #modalContent > *{min-width:0;}
 
   .modal .pin{
     position:absolute;top:-14px;left:50%;
@@ -475,6 +392,7 @@
   }
   .work-slide .work-imgs img{
     display:block;
+    flex:0 1 auto;min-width:0;
     height:48vh;max-height:440px;
     width:auto;max-width:48%;
     object-fit:contain;
@@ -628,8 +546,9 @@
   }
   .modal .photo-section h2{font-family:'Caveat',cursive !important;font-size:40px;font-weight:700;letter-spacing:0;}
   .folder-hint{text-align:center;font-size:13px;color:var(--ink-soft);margin:6px 0 20px;font-weight:600;}
-  .folders{display:flex;gap:54px;justify-content:center;}
+  .folders{display:flex;flex-wrap:wrap;gap:38px 54px;justify-content:center;}
   .photo-folder{
+    flex:0 0 auto;min-width:0;
     background:none;border:none;cursor:pointer;padding:0;
     display:flex;flex-direction:column;align-items:center;gap:10px;
     transform:rotate(var(--tr,0deg));
@@ -711,7 +630,7 @@
     box-shadow:4px 4px 0 rgba(60,40,20,.18);
   }
   .notes-input textarea{
-    flex:1;border:none;outline:none;resize:none;
+    flex:1 1 auto;min-width:0;border:none;outline:none;resize:none;
     font-size:15px;line-height:1.6;color:var(--ink);
     background:transparent;min-height:44px;max-height:120px;
     font-family:inherit;
@@ -835,10 +754,9 @@
     .tagline{display:none;}
     body{padding-top:130px;}
     .gallery{grid-template-columns:repeat(2,1fr);gap:14px;}
-    .modal{padding:36px 22px 28px;}
+    #modalContent{padding:36px 22px 28px;}
     .modal h2{font-size:36px;}
-    .notes-svg .label{font-size:22px;}
-    .hint{font-size:18px;white-space:normal;text-align:center;}
+    .hint{font-size:14px;white-space:normal;text-align:center;letter-spacing:.08em;bottom:26px;}
   }
 </style>
 </head>
@@ -859,21 +777,6 @@
   <div class="board-wrap">
     <div class="board" id="board">
 
-      <!-- 米白色毛毡垫 -->
-      <div class="mat pop" style="--r:-.4deg;animation-delay:.05s"></div>
-
-      <!-- 两个亚克力透明平台（无交互） -->
-      <div class="acrylic shelf"></div>
-      <div class="acrylic ledge"></div>
-
-      <!-- 四个等距挂钩 -->
-      <div class="pegs">
-        <div class="peg" style="left:37.6%;top:70.4%;"></div>
-        <div class="peg" style="left:43.3%;top:70.4%;"></div>
-        <div class="peg" style="left:48.9%;top:70.4%;"></div>
-        <div class="peg" style="left:54.6%;top:70.4%;"></div>
-      </div>
-
       <!-- pinned items -->
       <div class="item pop" id="id-card"  data-section="about"       style="animation-delay:.15s"><img src="ID卡.PNG" alt="Creative License"></div>
       <div class="item pop" id="note"     data-section="notes"       style="animation-delay:.30s"><img src="便签.PNG" alt="little notes"></div>
@@ -883,73 +786,13 @@
       <div class="item pop" id="tickets"  data-section="videos"      style="animation-delay:.65s"><img src="电影票根.PNG" alt="my videos"></div>
       <div class="item pop" id="apple"    data-section="surprise"    style="animation-delay:.75s"><img src="苹果挂件.PNG" alt="a little surprise"></div>
 
-      <!-- hand-drawn annotations -->
-      <svg class="notes-svg" viewBox="0 0 1000 656" preserveAspectRatio="none">
-        <defs>
-          <filter id="wobble">
-            <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="noise"/>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2"/>
-          </filter>
-          <marker id="arrowW" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L7,3 L0,6 Z" fill="#fdfaf3"/>
-          </marker>
-          <marker id="arrowK" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L7,3 L0,6 Z" fill="#3d3327"/>
-          </marker>
-        </defs>
-
-        <!-- about me（白）：椭圆右边框 → ID卡左下 -->
-        <ellipse cx="66" cy="300" rx="50" ry="27" class="anno-line w"/>
-        <text x="66" y="301" class="label w">about me</text>
-        <path class="anno-line w" marker-end="url(#arrowW)"
-          d="M 102 282 Q 110 269 117 259"/>
-
-        <!-- little notes（白）：椭圆左边框 → 便签右缘 -->
-        <ellipse cx="612" cy="58" rx="64" ry="27" class="anno-line w"/>
-        <text x="612" y="60" class="label w">little notes</text>
-        <path class="deco w" d="M 692 47 L 703 42"/>
-        <path class="deco w" d="M 699 59 L 711 59"/>
-        <path class="deco w" d="M 690 72 L 699 79"/>
-        <path class="anno-line w" marker-end="url(#arrowW)"
-          d="M 579 81 Q 571 112 565 138"/>
-
-        <!-- find me（白）：椭圆下边框 → 拍立得右上角 -->
-        <ellipse cx="688" cy="142" rx="50" ry="24" class="anno-line w"/>
-        <text x="688" y="144" class="label w">find me</text>
-        <path class="anno-line w" marker-end="url(#arrowW)"
-          d="M 707 164 Q 709 173 706 181"/>
-
-        <!-- my design（白）：椭圆左边框 → 海报右缘 -->
-        <ellipse cx="958" cy="228" rx="54" ry="27" class="anno-line w"/>
-        <text x="958" y="230" class="label w">my design</text>
-        <path class="deco w" d="M 921 184 L 932 179"/>
-        <path class="deco w" d="M 930 195 L 941 192"/>
-        <path class="anno-line w" marker-end="url(#arrowW)"
-          d="M 933 205 Q 940 196 948 189"/>
-
-        <!-- my photography（黑，保留）：椭圆左上边框 → 相机/平台 -->
-        <ellipse cx="184" cy="536" rx="80" ry="28" class="anno-line k"/>
-        <text x="184" y="538" class="label k">my photography</text>
-        <path class="anno-line k" marker-end="url(#arrowK)"
-          d="M 125 519 Q 115 505 124 496"/>
-
-        <!-- a little surprise（白）：椭圆左上边框 → 苹果右下 -->
-        <ellipse cx="662" cy="594" rx="84" ry="26" class="anno-line w"/>
-        <text x="662" y="596" class="label w" style="font-size:25px;">a little surprise</text>
-        <text x="756" y="594" class="label w" style="font-size:26px;">♥</text>
-        <path class="anno-line w" marker-end="url(#arrowW)"
-          d="M 583 581 Q 586 573 597 567"/>
-
-        <!-- my videos（白）：椭圆上边框 → 票根下缘 -->
-        <ellipse cx="906" cy="576" rx="60" ry="27" class="anno-line w"/>
-        <text x="906" y="578" class="label w">my videos</text>
-        <path class="anno-line w" marker-end="url(#arrowW)"
-          d="M 947 555 Q 953 545 946 535"/>
-      </svg>
+      <!-- 纯装饰贴纸（无交互）：贴在白色毛毡垫上，相机右侧、苹果上方 -->
+      <div class="stk pop" id="stk1" style="animation-delay:.85s"><img src="贴纸1.PNG" alt=""></div>
+      <div class="stk pop" id="stk2" style="animation-delay:.95s"><img src="贴纸2.PNG" alt=""></div>
     </div>
   </div>
 
-  <div class="hint">✦ 点一点、拖一拖，双击小物件可以归位 ✦</div>
+  <div class="hint">小物件可点击、拖拽，双击可归位</div>
 
   <!-- modal -->
   <div class="overlay" id="overlay">
@@ -1040,7 +883,7 @@ const SECTIONS = {
     <h2>about me</h2>
     <div class="sub">— 探索前须知 —</div>
     <p class="body">Heya，我是<b>褚歌</b>！很高兴你能点开我 vibecoding 的手搓作品集~</p>
-    <p class="body">我是 27 届纯血传播学背景的应届生，目前就读于<b>新加坡国立大学</b>传播学硕士项目，同时也在参与今年的秋招。</p>
+    <p class="body">我是 <b>27 届</b>纯血<b>传播学</b>背景的应届生，目前就读于<b>新加坡国立大学</b>传播学硕士项目，同时也在参与今年的秋招。</p>
     <p class="body">我打赌你已经看腻了各种令人审美疲劳的简历和作品集——那既然来了，就留下来让眼睛和大脑歇一歇，尽情探索这个作品集的奇妙玩法吧 =⩌⩊⩌=</p>
     <div class="about-from">—— 来自：</div>
     <div class="tags">
@@ -1051,7 +894,7 @@ const SECTIONS = {
       <span class="tag">#5G速度冲浪者</span>
       <span class="tag">#热衷审美积累之人</span>
       <span class="tag">#不吃压力之人</span>
-      <span class="tag">#接到面邀后决定和你慢慢来之人</span>
+      <span class="tag">#将multi-task贯彻到底之人</span>
     </div>
     </div>
   `,
@@ -1303,7 +1146,7 @@ function triggerSection(key){
 
 /* ---------------- layout persistence + reset ---------------- */
 const boardEl = document.getElementById('board');
-const LAYOUT_KEY = 'gechu-corkboard-layout-v1';
+const LAYOUT_KEY = 'gechu-corkboard-layout-v4';
 
 function saveLayout(){
   const data = {};
