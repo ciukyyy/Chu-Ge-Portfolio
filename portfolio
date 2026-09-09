@@ -11,10 +11,8 @@
   :root{
     --ink:#3d3327;
     --ink-soft:#6b5c49;
-    --wall:#f0e8da;
-    --board:#c2a483;
-    --board-light:#d4b995;
-    --board-dark:#a88a6a;
+    --wall:#ece2d0;
+    --board:#b3997e;
     --paper:#f8f2e4;
     --red:#c0392b;
     --chalk:#fdfaf3;
@@ -23,10 +21,10 @@
   html,body{height:100%;}
   body{
     font-family:'Noto Sans SC',sans-serif;
-    background:#f0e8da;
+    background:var(--wall);
     background-image:
-      radial-gradient(ellipse at 50% 0%, rgba(255,250,240,.6), transparent 60%),
-      radial-gradient(ellipse at 50% 100%, rgba(180,155,120,.08), transparent 55%);
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(circle at 80% 70%, rgba(160,130,90,.12), transparent 55%);
     color:var(--ink);
     min-height:100vh;
     overflow-x:hidden;
@@ -98,17 +96,16 @@
     width:100%;
     aspect-ratio:1630/1075;
     border-radius:48px;
-    background-color:#c2a483;
-    /* 细腻短纤维毛毡质感 - 纯净均匀 */
+    background-color:var(--board);
+    /* 双层毛毡：细纤维噪点 + 纤维丝缕 + 光照 */
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E"),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.035' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.14'/%3E%3C/svg%3E"),
-      linear-gradient(176deg, rgba(255,248,232,.40) 0%, transparent 42%),
-      linear-gradient(4deg, rgba(75,52,28,.20) 0%, transparent 48%);
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='f1'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cfilter id='f2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.05' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f2)' opacity='0.28'/%3E%3Crect width='100%25' height='100%25' filter='url(%23f1)' opacity='0.17'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse at 30% 18%, rgba(255,255,255,.16), transparent 60%),
+      radial-gradient(ellipse at 78% 88%, rgba(85,60,35,.18), transparent 65%);
     box-shadow:
-      0 32px 60px rgba(80,60,35,.28),
-      inset 0 4px 12px rgba(255,250,240,.4),
-      inset 0 -8px 20px rgba(70,50,30,.22);
+      0 34px 66px rgba(80,60,35,.38),
+      inset 0 2px 8px rgba(255,255,255,.28),
+      inset 0 -5px 16px rgba(70,50,30,.28);
   }
 
   /* ---------- items ---------- */
@@ -158,16 +155,15 @@
     left:6%; top:50%;
     width:54%; height:35%;
     border-radius:36px;
-    background-color:#e8e2d4;
+    background-color:#e6dfd2;
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='2' seed='6' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)' opacity='0.10'/%3E%3C/svg%3E"),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.04' numOctaves='2' seed='10' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f2)' opacity='0.14'/%3E%3C/svg%3E"),
-      linear-gradient(175deg, rgba(255,255,255,.55) 0%, transparent 50%),
-      linear-gradient(5deg, rgba(120,100,75,.14) 0%, transparent 55%);
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='m1'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='6' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cfilter id='m2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015 0.06' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m2)' opacity='0.3'/%3E%3Crect width='100%25' height='100%25' filter='url(%23m1)' opacity='0.15'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse at 32% 12%, rgba(255,255,255,.65), transparent 62%),
+      radial-gradient(ellipse at 70% 95%, rgba(120,105,85,.14), transparent 60%);
     box-shadow:
-      0 18px 32px rgba(60,45,28,.28),
-      inset 0 2px 6px rgba(255,255,255,.75),
-      inset 0 -4px 10px rgba(100,85,65,.18);
+      0 16px 28px rgba(60,45,28,.32),
+      inset 0 2px 6px rgba(255,255,255,.7),
+      inset 0 -3px 9px rgba(90,80,65,.22);
     z-index:8;
     transform:rotate(-.4deg);
   }
@@ -386,49 +382,37 @@
     font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:#fff;
   }
 
-  /* gallery - 横向滑动电子展览 */
-  .carousel-wrap{position:relative;margin-top:14px;}
-  .carousel{
-    display:flex;gap:22px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    scroll-behavior:smooth;
-    padding:8px 4px 16px;
-    margin:0 -4px;
-  }
-  .carousel::-webkit-scrollbar{height:8px;}
-  .carousel::-webkit-scrollbar-track{background:rgba(107,92,73,.15);border-radius:8px;}
-  .carousel::-webkit-scrollbar-thumb{background:rgba(107,92,73,.4);border-radius:8px;}
-  .carousel .shot{
-    flex:0 0 62%;
-    max-width:380px;
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:14px;}
+  .shot{
     background:#fff;
-    padding:12px 12px 16px;
+    padding:10px 10px 14px;
     box-shadow:0 10px 20px rgba(80,60,35,.28);
-    scroll-snap-align:center;
+    transform:rotate(var(--tr,0deg));
     transition:transform .25s;
   }
-  .carousel .shot:nth-child(odd){transform:rotate(-2deg);}
-  .carousel .shot:nth-child(even){transform:rotate(1.5deg);}
-  .carousel .shot:hover{transform:rotate(0) scale(1.04);z-index:5;}
-  .carousel .shot img{width:100%;aspect-ratio:1;object-fit:cover;display:block;}
-  .carousel .shot.landscape img{aspect-ratio:4/3;}
-  .carousel .shot .cap{
+  .shot:nth-child(3n+1){--tr:-2.5deg;}
+  .shot:nth-child(3n+2){--tr:1.8deg;}
+  .shot:nth-child(3n){--tr:-1deg;}
+  .shot:hover{transform:rotate(0) scale(1.05);}
+  .shot img{width:100%;aspect-ratio:1;object-fit:cover;display:block;}
+  .shot .cap{
     font-family:'Caveat',cursive;
     font-size:21px;
     text-align:center;
     margin-top:8px;
     color:var(--ink);
   }
-  .carousel .shot.video-cell .play{
+  .video-cell{position:relative;cursor:pointer;}
+  .video-cell img{aspect-ratio:4/3;}
+  .play{
     position:absolute;inset:0;
     display:flex;align-items:center;justify-content:center;
-    pointer-events:none;margin:12px;
+    pointer-events:none;
   }
-  .carousel .shot.video-cell{position:relative;}
   .play::before{
     content:'';
-    width:52px;height:52px;border-radius:50%;
+    width:56px;height:56px;border-radius:50%;
     background:rgba(255,255,255,.9);
     box-shadow:0 4px 14px rgba(0,0,0,.4);
     position:absolute;
@@ -436,29 +420,11 @@
   .play::after{
     content:'';
     position:relative;
-    border-left:18px solid var(--red);
-    border-top:11px solid transparent;
-    border-bottom:11px solid transparent;
+    border-left:20px solid var(--red);
+    border-top:12px solid transparent;
+    border-bottom:12px solid transparent;
     margin-left:6px;
   }
-
-  /* carousel 箭头按钮 */
-  .carousel-btn{
-    position:absolute;top:50%;
-    width:44px;height:44px;border-radius:50%;
-    border:2px solid var(--ink);background:var(--paper);
-    color:var(--ink);font-size:20px;font-weight:700;
-    cursor:pointer;display:flex;align-items:center;justify-content:center;
-    transform:translateY(-50%);
-    box-shadow:3px 3px 0 var(--ink);
-    transition:transform .15s, box-shadow .15s, background .15s;
-    z-index:10;
-    font-family:inherit;
-  }
-  .carousel-btn:hover{transform:translateY(-50%) translate(-2px,-2px);box-shadow:5px 5px 0 var(--red);background:#fff;}
-  .carousel-btn:active{transform:translateY(-50%);box-shadow:1px 1px 0 var(--ink);}
-  .carousel-btn.prev{left:-10px;}
-  .carousel-btn.next{right:-10px;}
 
   /* surprise */
   .surprise-box{text-align:center;position:relative;}
@@ -593,10 +559,10 @@
           d="M 933 205 Q 940 196 948 189"/>
 
         <!-- my photography（黑，保留）：椭圆左上边框 → 相机/平台 -->
-        <ellipse cx="184" cy="536" rx="80" ry="28" class="anno-line k"/>
-        <text x="184" y="538" class="label k">my photography</text>
+        <ellipse cx="180" cy="2000" rx="80" ry="12" class="anno-line k"/>
+        <text x="180" y="2000" class="label k">my photography</text>
         <path class="anno-line k" marker-end="url(#arrowK)"
-          d="M 125 519 Q 115 505 124 496"/>
+          d="M 180 1950 Q 190 1910 224 1870"/>
 
         <!-- a little surprise（白）：椭圆左上边框 → 苹果右下 -->
         <ellipse cx="662" cy="594" rx="84" ry="26" class="anno-line w"/>
@@ -695,40 +661,28 @@ const SECTIONS = {
   design: `
     <h2>my design</h2>
     <div class="sub">— 一些视觉与平面作品 —</div>
-    <div class="carousel-wrap">
-      <button class="carousel-btn prev" data-carousel="designCarousel">‹</button>
-      <button class="carousel-btn next" data-carousel="designCarousel">›</button>
-      <div class="carousel" id="designCarousel">
-        ${designWorks.map(([cap, p]) => `
-          <div class="shot"><img src="${IMG(p, 'square')}" alt="${cap}" loading="lazy"><div class="cap">${cap}</div></div>
-        `).join('')}
-      </div>
+    <div class="gallery">
+      ${designWorks.map(([cap, p]) => `
+        <div class="shot"><img src="${IMG(p, 'square')}" alt="${cap}" loading="lazy"><div class="cap">${cap}</div></div>
+      `).join('')}
     </div>
   `,
   photography: `
     <h2>my photography</h2>
     <div class="sub">— 拍立得记住的瞬间 —</div>
-    <div class="carousel-wrap">
-      <button class="carousel-btn prev" data-carousel="photoCarousel">‹</button>
-      <button class="carousel-btn next" data-carousel="photoCarousel">›</button>
-      <div class="carousel" id="photoCarousel">
-        ${photoWorks.map(([cap, p]) => `
-          <div class="shot"><img src="${IMG(p, 'square')}" alt="${cap}" loading="lazy"><div class="cap">${cap}</div></div>
-        `).join('')}
-      </div>
+    <div class="gallery">
+      ${photoWorks.map(([cap, p]) => `
+        <div class="shot"><img src="${IMG(p, 'square')}" alt="${cap}" loading="lazy"><div class="cap">${cap}</div></div>
+      `).join('')}
     </div>
   `,
   videos: `
     <h2>my videos</h2>
     <div class="sub">— 马戏团开演，请入场 —</div>
-    <div class="carousel-wrap">
-      <button class="carousel-btn prev" data-carousel="videoCarousel">‹</button>
-      <button class="carousel-btn next" data-carousel="videoCarousel">›</button>
-      <div class="carousel" id="videoCarousel">
-        ${videoWorks.map(([cap, p]) => `
-          <div class="shot landscape video-cell"><img src="${IMG(p, 'landscape_4_3')}" alt="${cap}" loading="lazy"><div class="play"></div><div class="cap">${cap}</div></div>
-        `).join('')}
-      </div>
+    <div class="gallery">
+      ${videoWorks.map(([cap, p]) => `
+        <div class="shot video-cell"><img src="${IMG(p, 'landscape_4_3')}" alt="${cap}" loading="lazy"><div class="play"></div><div class="cap">${cap}</div></div>
+      `).join('')}
     </div>
     <p class="body" style="text-align:center;margin-top:20px;font-family:'Caveat',cursive;font-size:23px;">enjoy the show ✦</p>
   `,
@@ -757,28 +711,10 @@ function openSection(key){
     btn.addEventListener('click', () => launchConfetti(document.querySelector('.surprise-box')));
     setTimeout(() => launchConfetti(document.querySelector('.surprise-box')), 400);
   }
-  initCarousels();
 }
 function closeSection(){
   overlay.classList.remove('open');
   document.body.style.overflow = '';
-}
-
-/* ---- carousel 初始化 ---- */
-function initCarousels(){
-  document.querySelectorAll('.carousel-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const carousel = document.getElementById(btn.dataset.carousel);
-      if(!carousel) return;
-      const shot = carousel.querySelector('.shot');
-      const step = shot ? shot.offsetWidth + 22 : 300;
-      if(btn.classList.contains('prev')){
-        carousel.scrollBy({ left: -step, behavior: 'smooth' });
-      } else {
-        carousel.scrollBy({ left: step, behavior: 'smooth' });
-      }
-    });
-  });
 }
 
 function triggerSection(key){
@@ -864,16 +800,7 @@ document.querySelectorAll('.mainnav a').forEach(a => {
 
 closeBtn.addEventListener('click', closeSection);
 overlay.addEventListener('click', e => { if(e.target === overlay) closeSection(); });
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){ closeSection(); return; }
-  if(!overlay.classList.contains('open')) return;
-  const carousel = document.querySelector('.modal .carousel');
-  if(!carousel) return;
-  const shot = carousel.querySelector('.shot');
-  const step = shot ? shot.offsetWidth + 22 : 300;
-  if(e.key === 'ArrowLeft'){ carousel.scrollBy({ left: -step, behavior: 'smooth' }); e.preventDefault(); }
-  if(e.key === 'ArrowRight'){ carousel.scrollBy({ left: step, behavior: 'smooth' }); e.preventDefault(); }
-});
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeSection(); });
 
 /* remove pop class after entrance so hover transforms take over */
 document.querySelectorAll('.pop').forEach(el => {
